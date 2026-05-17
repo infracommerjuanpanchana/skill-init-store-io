@@ -157,7 +157,7 @@ Si Chrome DevTools MCP disponible → automatizar click.
 ## F1 - Paso 5: Clonar repos del proyecto
 
 ```bash
-echo -e "{PROYECTO}\ns" | node clone-repos.js
+node clone-repos.js --proyecto {PROYECTO} --vendor {VENDOR} --yes
 ```
 
 **Verificar**: listar directorio padre, confirmar 10 repos.
@@ -174,7 +174,7 @@ git clone git@bitbucket.org:vtex-infralatam/{REPO}-{PROYECTO}.git
 node configure-repo.js
 
 # Peer dependencies
-echo "s" | node install-peer-deps.js
+node install-peer-deps.js --yes
 
 # Wishlist
 vtex install vtex.wish-list@1.x
@@ -322,7 +322,7 @@ Escribir todos los valores del usuario. URLs de imagenes quedan vacias.
 ## F2 - Paso 3: Subir imagenes
 
 ```bash
-echo "s" | node upload-images-vtex.js
+node upload-images-vtex.js --yes
 ```
 
 **Post-verificacion**: Leer config.json, verificar URLs de imagenes. Si LOGO_IMAGE o LOGO_BLANCO vacios → avisar.
@@ -338,7 +338,7 @@ Reemplaza todas las variables en TODOS los archivos de TODOS los repos.
 ## F2 - Paso 5: Re-linkear
 
 ```bash
-node kill-vtex-links.js
+node kill-vtex-links.js --yes
 node vtex-link.js
 ```
 
