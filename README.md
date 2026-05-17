@@ -5,7 +5,7 @@ Skill para agentes AI que inicializa una tienda VTEX IO completa basada en Fast 
 ## Instalacion
 
 ```bash
-infracode skills add vtex-infralatam/skill-init-store-io@init-store-io
+infracode skills add InfracommerJuanPanchana/skill-init-store-io@init-store-io
 ```
 
 Esto instala automaticamente en `.agents/`, `.claude/`, `.kilocode/`, `.opencode/` segun tu proyecto.
