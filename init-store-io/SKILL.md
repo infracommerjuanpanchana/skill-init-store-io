@@ -433,6 +433,19 @@ Invalid manifest.json
 ```
 → Fix: verificar manifest.json del repo tiene vendor, name, version validos
 
+### Regla para el agente — Reintentar componentes fallidos
+
+El script `vtex-link.js` NO reintenta componentes que fallan (timeout u otro error). **El agente DEBE reintentar manualmente**:
+
+1. Parsear output JSON e identificar componentes fallidos (campo `failed` o mensaje "Fallaron")
+2. Por cada componente fallido:
+   - Matar proceso colgado si existe: `kill {pid}` (usar PIDs del output)
+   - Reintentar manual: `cd ../{repo} && vtex link` (esperar "successfully" en output, timeout 300s)
+3. Maximo 2 reintentos por componente
+4. Si falla despues de 2 reintentos → informar al usuario con error exacto y pedir intervencion
+
+**Orden de reintento importa**: si `store-theme` fallo, reintentar ULTIMO (depende de otros componentes).
+
 ### Diagnostico automatico
 
 ```bash
