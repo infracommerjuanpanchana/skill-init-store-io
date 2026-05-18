@@ -45,6 +45,28 @@ node --version && yarn --version && vtex --version && ssh -T git@bitbucket.org
 
 ---
 
+## Paso 0: Clonar el repo init-ftlat
+
+Antes de ejecutar cualquier paso, clonar el repo base en la rama `process`:
+
+```bash
+git clone --branch process git@bitbucket.org:vtex-infralatam/init-ftlat.git
+cd init-ftlat/init-ftlat-v2
+yarn
+```
+
+**IMPORTANTE**: Siempre clonar desde la rama `process`. Esta rama contiene la version actualizada de los scripts de inicializacion.
+
+### Limpieza post-ejecucion
+
+Al terminar todos los pasos (1-11), eliminar el repo clonado `init-ftlat/`. Solo sirve para ejecutar los scripts — los repos de la tienda ya quedaron clonados aparte.
+
+```bash
+rm -rf init-ftlat
+```
+
+---
+
 ## Como Ejecutar
 
 ### Orquestador completo
@@ -723,3 +745,4 @@ node manual-steps.js --output json
 8. **No modificar config.json manualmente** entre pasos 5 y 9 (setup.js busca keys como strings, si ya fueron reemplazadas no las encuentra de nuevo)
 9. **Verificar estado**: leer `init-state.json` para saber en que paso quedo
 10. **Informar progreso** al usuario despues de cada paso completado
+11. **Limpieza final**: al terminar todos los pasos, eliminar el directorio `init-ftlat/` clonado en paso 0 — solo contiene scripts, no es parte de la tienda
