@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(ls /Users/panchana/Documents/INFRACOMMERCE/code/fasttemplate/init-ftlat-v2/*.js)"
     ]
   }
 }

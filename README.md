@@ -22,7 +22,7 @@ O decir: "Quiero iniciar una tienda VTEX IO"
 
 | Fase | Datos | Resultado |
 |------|-------|-----------|
-| **1. Levantar** | VENDOR, PROYECTO, tipo tienda, pais | Tienda funcional linkeada en workspace `fasttemplate` |
+| **1. Levantar** | swarovskichile, PROYECTO, tipo tienda, pais | Tienda funcional linkeada en workspace `fasttemplate` |
 | **2. Estilos** | Marca, colores, fuentes, imagenes | Branding aplicado, mails subidos |
 | **3. Customs** | Integraciones, envio gratis | Tienda lista para QA |
 
