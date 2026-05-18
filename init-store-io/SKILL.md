@@ -180,6 +180,26 @@ vtex workspace list
 3. POST a `https://{account}.myvtex.com/_v/api/easy-setup/populate`
 4. Pobla catalogo, logistica, pagos del account
 
+### Validacion previa — OBLIGATORIA
+
+Antes de ejecutar este paso, verificar si la tienda ya tiene datos. Easy Setup sobreescribe catalogo, logistica y pagos. **No ejecutar si la tienda ya tiene informacion.**
+
+```bash
+# Verificar si hay productos en catalogo
+curl -s "https://{vendor}.myvtex.com/api/catalog_system/pvt/products/GetProductAndSkuIds?_from=0&_to=1" \
+  -H "VtexIdclientAutCookie: {token}" | node -e "
+const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));
+const total=d.range?.total || Object.keys(d.data||{}).length;
+console.log(JSON.stringify({has_products: total > 0, total}))
+"
+```
+
+**Regla para el agente**:
+1. Ejecutar la verificacion de productos
+2. Si `has_products: true` → **PREGUNTAR al usuario** antes de continuar. Mostrar cantidad de productos encontrados y advertir que Easy Setup puede sobreescribir datos existentes
+3. Si `has_products: false` → tienda vacia, ejecutar Easy Setup normalmente
+4. Si el usuario confirma que quiere saltear → marcar paso 2 como completado y continuar con paso 3
+
 ### Errores y soluciones
 
 | Error JSON | Mensaje | Causa | Solucion |
