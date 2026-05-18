@@ -310,6 +310,22 @@ Despues de clonar, verificar:
 | Store-theme no encontrado | Repos no clonados o manifest.json no tiene "store-theme" en name | Verificar paso 3 completado. Buscar: `grep -r "store-theme" ../*/manifest.json` |
 | `vtex install` falla para una dep | App no existe en registry, version no disponible, permisos | Individual: `vtex install {dep}@{version} -f`. Si la app no existe → verificar nombre exacto. Algunas apps requieren billing aprobado |
 | Todas las deps fallan | Token expirado | `vtex login {vendor}` y reintentar |
+| Billing required / Terms of service | App requiere aprobacion manual en VTEX Admin | Ver seccion "Apps que requieren aprobacion" abajo |
+
+### Apps que requieren aprobacion de billing
+
+Algunas peer dependencies necesitan que el usuario apruebe terminos/billing manualmente en VTEX Admin. `vtex install -f` falla silenciosamente o muestra error de billing para estas apps.
+
+**Regla para el agente — OBLIGATORIA**:
+
+1. Despues de ejecutar `install-apps.js`, parsear output y listar TODAS las deps que fallaron
+2. Para cada dep fallida, verificar si es error de billing ejecutando: `vtex install {dep}@{version}` (sin -f) y buscar mensajes como "billing", "terms", "subscribe", "pricing" en output
+3. Si hay apps pendientes de billing:
+   - Generar URL de aprobacion: `https://{vendor}.myvtex.com/admin/apps/{vendor-app}/{version}/setup` (o la URL que VTEX CLI muestre en el error)
+   - **MOSTRAR AL USUARIO** la lista de apps pendientes con sus URLs de aprobacion
+   - **ESPERAR** a que el usuario confirme que aprobo cada una
+   - Reintentar `vtex install {dep}@{version} -f` despues de aprobacion
+4. **NO continuar al paso 5/6** hasta que TODAS las peer dependencies esten instaladas. Componentes fallan en `vtex link` si faltan peers (ej: `vtex.wish-list@1.x`)
 
 ### Diagnostico automatico
 
@@ -322,6 +338,9 @@ find .. -name "manifest.json" -maxdepth 2 -exec grep -l "store-theme" {} \;
 
 # Instalar dep individual que fallo
 vtex install vtex.store@2.x -f
+
+# Verificar que deps estan instaladas
+vtex list | grep -E "wish-list|store-sitemap|reviews-and-ratings"
 ```
 
 ---
